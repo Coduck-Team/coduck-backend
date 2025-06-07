@@ -1,20 +1,23 @@
-#[macro_use]
-extern crate rocket;
+#[tokio::test]
+async fn health_check_works() {
+    let listener = tokio::net::TcpListener::bind("127.0.0.1:0").await.unwrap();
+    let port = listener.local_addr().unwrap().port();
 
-use rocket::http::Status;
-use rocket::local::blocking::Client;
-use rocket::{Build, Rocket};
-use std::io::Read;
+    tokio::spawn(async move {
+        let app = coduck_backend::build_router();
+        axum::serve(listener, app)
+            .await
+            .expect("Server failed to start");
+    });
 
-fn spawn_app() -> Rocket<Build> {
-    bibimbap_backend::run()
-}
+    let client = reqwest::Client::new();
+    let response = client
+        .get(&format!("http://127.0.0.1:{port}/health"))
+        .send()
+        .await
+        .unwrap();
 
-#[test]
-fn health_check_works() {
-    let client = Client::tracked(spawn_app()).expect("Failed to create client");
-    let response = client.get(uri!("/health_check")).dispatch();
-
-    assert_eq!(response.status(), Status::Ok);
-    assert_eq!(response.bytes().count(), 0);
+    assert_eq!(response.status(), reqwest::StatusCode::OK);
+    let body = response.text().await.unwrap();
+    assert_eq!(body, "OK");
 }
