@@ -7,7 +7,7 @@ use rocket::{Build, Rocket};
 use std::io::Read;
 
 fn spawn_app() -> Rocket<Build> {
-    bibimbap_backend::run()
+    coduck_backend::run()
 }
 
 #[test]

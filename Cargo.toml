@@ -1,5 +1,5 @@
 [package]
-name = "bibimbap-backend"
+name = "coduck-backend"
 version = "0.1.0"
 edition = "2021"
 
@@ -8,7 +8,7 @@ path = "src/lib.rs"
 
 [[bin]]
 path = "src/main.rs"
-name = "bibimbap-backend"
+name = "coduck-backend"
 
 [dependencies]
 rocket = "0.5.1"
