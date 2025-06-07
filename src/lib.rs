@@ -1,13 +1,9 @@
-#[macro_use]
-extern crate rocket;
+use axum::{routing::get, Router};
 
-use rocket::{Build, Rocket};
-
-#[get("/health_check")]
-fn health_check() {
-    ()
+async fn health_check() -> &'static str {
+    "OK"
 }
 
-pub fn run() -> Rocket<Build> {
-    rocket::build().mount("/", routes![health_check])
+pub fn build_router() -> Router {
+    Router::new().route("/health", get(health_check))
 }
