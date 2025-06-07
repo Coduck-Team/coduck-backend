@@ -13,7 +13,7 @@ jobs:
     name: 🗊 Formatting
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Install toolchain
         uses: actions-rs/toolchain@v1
         with:
@@ -31,7 +31,7 @@ jobs:
     name: 🚨 Lint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Install packages
         run: sudo apt-get install xorg-dev libglu1-mesa-dev
       - name: Install toolchain
@@ -49,7 +49,7 @@ jobs:
     name: ✅ Test Suite
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Install packages
         run: sudo apt-get install xorg-dev libglu1-mesa-dev
       - uses: actions-rs/toolchain@v1
@@ -71,9 +71,9 @@ jobs:
     name: 👮 Audit
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Cache cargo bin
-        uses: actions/cache@v1
+        uses: actions/cache@v4
         with:
           path: ~/.cargo/bin
           key: ${{ runner.os }}-cargo-audit
