@@ -13,3 +13,6 @@ name = "coduck-backend"
 [dependencies]
 axum = "0.8.4"
 tokio = { version = "1.45.1", features = ["full"] }
+
+[dev-dependencies]
+reqwest = { version = "0.12.19", features = ["json", "rustls-tls"] }
